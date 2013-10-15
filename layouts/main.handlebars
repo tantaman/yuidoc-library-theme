@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" id="docs">
+<head>
+    <meta charset="utf-8">
+    <title>{{htmlTitle}}</title>
+    <link rel="stylesheet" href="{{projectAssets}}/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="{{projectAssets}}/css/main.css">
+</head>
+<body>
+    <h1>{{projectName}} <span>{{projectVersion}}</span></h1>
+    <div>
+        {{#classes}}
+        <div>
+            <h2><code>{{name}}</code></h2>
+            <ul>
+                {{#eachthat ../is_constructor 'name' name}}
+                <li><a href="#{{class}}-{{name}}"><code><span class="me1">Constructor</span></code></a></li>
+                {{/eachthat}}
+                {{#eachthat ../methods 'class' name}}
+                <li><a href="#{{class}}-{{name}}"><code><span class="me1">{{name}}</span></code></a></li>
+                {{/eachthat}}
+            </ul>
+        </div>
+        {{/classes}}
+    </div>
+    <div>
+        {{#classes}}
+        <div>
+            <h2><code>"{{name}}" Methods</code></h2>
+
+            {{#eachthat ../is_constructor 'name' name}}
+            <div>
+                <h3>
+                    <a id="{{class}}-{{name}}"></a>
+                    <code>
+<span class="me1">{{name}}</span><span class="br0">(</span>{{#each params}}{{#sep @index ', '}}{{/sep}}{{#if optional}}[{{/if}}{{name}}{{#if optional}}]{{/if}}{{/each}}<span class="br0">)</span> - Constructor
+                    </code>
+                </h3>
+                {{{description}}}
+                <h4>Arguments</h4>
+                <ol>
+                    {{#each params}}
+                    <li><code>{{name}}</code> <em>({{type}})</em>: {{#stripTag description}}{{/stripTag}}</li>
+                    {{/each}}
+                </ol>
+                <h4>Returns</h4>
+                <p><em>({{return.type}})</em>: {{#stripTag return.description}}{{/stripTag}}</p>
+                <h4>Example</h4>
+                {{{example}}}
+            </div>
+            {{/eachthat}}
+
+            {{#eachthat ../methods 'class' name}}
+            <div>
+                <h3>
+                    <a id="{{class}}-{{name}}"></a>
+                    <code>
+{{#acronym class}}{{/acronym}}.<span class="me1">{{name}}</span><span class="br0">(</span>{{#each params}}{{#sep @index ', '}}{{/sep}}{{#if optional}}[{{/if}}{{name}}{{#if optional}}]{{/if}}{{/each}}<span class="br0">)</span>
+                    </code>
+                </h3>
+                {{{description}}}
+                <h4>Arguments</h4>
+                <ol>
+                    {{#each params}}
+                    <li><code>{{name}}</code> <em>({{type}})</em>: {{#stripTag description}}{{/stripTag}}</li>
+                    {{/each}}
+                </ol>
+                <h4>Returns</h4>
+                <p><em>({{return.type}})</em>: {{#stripTag return.description}}{{/stripTag}}</p>
+                <h4>Example</h4>
+                {{{example}}}
+            </div>
+            {{/eachthat}}
+        </div>
+        {{/classes}}
+    </div>
+<script src="{{projectAssets}}/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>
